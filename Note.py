@@ -1,10 +1,8 @@
 import datetime
 
-import functions
-
-
 class Note():
     _curId = 0
+
     def __init__(self, id, date, title, msg):
         self.id = id
         self.noteTitle = title
@@ -12,22 +10,30 @@ class Note():
         self.noteDate = date
 
     @staticmethod
-    def createNewNote():
+    def createNewNote(title,msg):
         id = Note._curId + 1
         Note._curId += 1
-        title = functions.get_string('Enter Title for note: ')
-        msg = functions.get_string('Enter Message for note: ')
         noteDate = datetime.datetime.now()
-        return Note(id,noteDate,title,msg)
-
+        return Note(id, noteDate, title, msg)
+    @staticmethod
+    def loadNote(id, date, title, msg):
+        if Note._curId < id:
+            Note._curId = id + 1
+        time_format = "%Y-%m-%d %H:%M:%S"
+        noteDate = datetime.datetime.strptime(date,time_format)
+        return Note(id, noteDate, title, msg)
     def getLastId(cls):
         return cls._curId
+
     def getNoteId(self):
         return self.id
+
     def getTitle(self):
         return self.noteTitle
+
     def getMessage(self):
         return self.noteMsg
+
     def getDate(self):
         time_format = "%Y-%m-%d %H:%M:%S"
         return format(f"{self.noteDate:{time_format}}")
