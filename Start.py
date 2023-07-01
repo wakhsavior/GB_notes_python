@@ -1,26 +1,44 @@
 import sys
 import NotesModel
+import NotesView
+import NotesPresenter
+import functions
+
 
 def main(argv):
-    NotesModel.Note.addMsg('Title1', 'Msg1')
-    NotesModel.Note.addMsg('Title2', 'Msg2')
-    NotesModel.Note.addMsg('Title3', 'Msg3')
-    NotesModel.Note.addMsg('Title4', 'Msg4')
-    NotesModel.Note.addMsg('Title5', 'Msg5')
-    NotesModel.Note.addMsg('Title6', 'Msg6')
-    NotesModel.Note.addMsg('Title7', 'Msg7')
-    NotesModel.Note.addMsg('Title8', 'Msg8')
-    for note in NotesModel.Note.items:
-        print(note)
+    model = NotesModel.NotesModel()
+    view = NotesView.NotesView()
+    presenter = NotesPresenter.NotesPresenter(model,view)
+    play = True
+    print("This is console Notes program.")
+    while play:
 
-    NotesModel.Note.delMsg(3)
-    for note in NotesModel.Note.items:
-        print(note)
-    NotesModel.Note.delMsg(NotesModel.Note.items[5])
-    for note in NotesModel.Note.items:
-        print(note)
-    NotesModel.Note.items[3].changeMsg('Title10', 'Msg10')
-    for note in NotesModel.Note.items:
-        print(note)
+        answer = functions.get_string("Console Notes:\n"
+                       "1. Show all notes\n"
+                       "2. Add a note\n"
+                       "3. Change a note\n"
+                       "4. Delete a note\n"
+                       "5. Clear all notes\n"
+                       "6. Save notes to file\n"
+                       "0. Exit\n")
+        match answer:
+            case "1":
+                presenter.showAllNotes()
+            case "2":
+                presenter.addNote()
+            case "3":
+                presenter.showAllNotes()
+                presenter.changeNote(functions.get_int("Enter Note number: "))
+            case "4":
+                presenter.delNote(functions.get_int("Enter Note number: "))
+            case "5":
+                presenter.clearAllNotes()
+            case "6":
+                pass
+            case "0":
+                play = False
+            case _:
+                print("Try again!\n")
+
 if __name__ == '__main__':
     main(sys.argv)
