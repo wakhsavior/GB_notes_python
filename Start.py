@@ -2,11 +2,14 @@ import sys
 import NotesModel
 import NotesView
 import NotesPresenter
-import functions
 
+# Console program for make and use Notes
+# Use MVP model
+# Main menu use loop
 
 def main(argv):
     print("This is console Notes program.")
+# Create model, view, presenter
     model = NotesModel.NotesModel()
     view = NotesView.NotesView()
     presenter = NotesPresenter.NotesPresenter(model, view)
